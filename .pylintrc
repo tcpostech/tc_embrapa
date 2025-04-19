@@ -8,6 +8,7 @@ disable=
         W0611, # unused-import
         W0612, # unused-variable
         W0707, # raise-missing-from
+        W0613, # unused-argument
         W0718, # broad-exception-caught
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and

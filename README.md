@@ -32,3 +32,12 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 - Preencha cada uma das variáveis de acordo com o seu ambiente de desenvolvimento
 - Ao utilizar a aplicação em ambiente local, será possível visualizar pelo modelo [Swagger](http://127.0.0.1:8000/docs) e [Redoc](http://127.0.0.1:8000/redoc). Variando o domínio de acordo com o ambiente que você estiver executando.
 - Para utilizar a API responsável realizar um cadastro e em seguida se autenticar para que seja possível visualizar o conteúdo extraído do site da Embrapa
+
+
+### Principais bibliotecas para o desenvolvimento
+- **Alembic:** Responsável por inicializar os arquivos de configurações para as migrations e sincronização para cada nova inclusão/alteração na base de dados
+- Asyncpg
+- Bcrypt
+- FastAPI
+- Pydantic Settings
+- Pyjwt

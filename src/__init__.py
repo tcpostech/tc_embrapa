@@ -5,7 +5,7 @@ from src.client.embrapa import embrapa_router
 
 app = FastAPI(
     version='1.0.0',
-    title='Tech Challenge - Embrapa Collection API',
+    title='Tech Challenge 01 - Collection API',
     description='A Rest API collection for FIAP - Tech Challenge'
 )
 

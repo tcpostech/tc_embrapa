@@ -31,6 +31,8 @@ class Viticulture(SQLModel, table=True):
     category: str = Field(sa_column=Column(pg.VARCHAR, nullable=False))
     subcategory: str = Field(sa_column=Column(pg.VARCHAR, nullable=False))
     data: str = Field(sa_column=Column(pg.JSONB))
+    created_at: datetime = Field(sa_column=Column(pg.TIMESTAMP, default=datetime.now))
+    updated_at: datetime = Field(sa_column=Column(pg.TIMESTAMP, default=datetime.now))
 
     def __repr__(self):
         return f'<Viticulture {self.category}>'

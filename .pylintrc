@@ -2,6 +2,7 @@
 disable=
         C0103, # invalid-name
         C0114, # missing-module-docstring
+        C0327, # mixed-line-endings
         E1101, # no-member
         R1710, # inconsistent-return-statements
         W0107, # unnecessary-pass

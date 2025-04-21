@@ -25,8 +25,29 @@ class UserCreateModel(BaseModel):
     email: str = Field(max_length=40)
     password: str = Field(min_length=6, max_length=12)
 
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "first_name": "Ronald",
+                "last_name": "McDonald",
+                "username": "mrbigmac",
+                "email": "ronald.mcdonald@email.com",
+                "password": "secret123"
+            }
+        }
+    }
+
 
 class UserLoginModel(BaseModel):
     """UserLoginModel used for login"""
     email: str = Field(max_length=40)
     password: str = Field(min_length=6, max_length=12)
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "email": "ronald.mcdonald@email.com",
+                "password": "secret123"
+            }
+        }
+    }

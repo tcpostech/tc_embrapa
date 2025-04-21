@@ -23,7 +23,7 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 -[x] Sua API deve estar documentada.
 -[x] É recomendável (não obrigatório) a escolha de um método de autenticação (JWT, por exemplo).
 -[ ] Criar um plano para fazer o deploy da API, desenhando a arquitetura do projeto desde a ingestão até a alimentação do modelo (aqui não é Tech Challenge necessário elaborar um modelo de ML, mas é preciso que vocês escolham um cenário interessante em que a API possa ser utilizada).
--[ ] Fazer um MVP realizando o deploy com um link compartilhável e um repositório no github.
+-[ ] Fazer um MVP realizando o deploy com um link compartilhável e um repositório no GitHub.
 
 ---
 
@@ -48,6 +48,12 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 - **Pylint:** Ferramenta de análise de código Python que verifica padrões e boas práticas.
 - **PyJWT:** Manipulação de tokens JWT para autenticação segura em aplicações web.
 - **SQLModel:** Biblioteca para manipulação de bancos de dados usando Pydantic e SQLAlchemy de maneira intuitiva.
+
+### Passos para o deploy utilizando o [Render](https://dashboard.render.com/)
+- Configurar um banco de dados Postgre
+- Executar a aplicação em ambiente local com a nova conexão da base de dados para atualizar todas as tabelas
+- Configurar um novo Web Service
+- Incluir todas as variáveis inclusas no arquivo **.env**
 
 ### Fluxos de cada etapa funcional
 - Cadastro com envio de e-mail

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, BackgroundTasks
 from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -9,9 +9,8 @@ from src.auth.dependencies import RefreshTokenBearer, get_current_user
 from src.auth.schemas import UserCreateModel, UserLoginModel, UserModel
 from src.auth.services import UserService
 from src.auth.utils import create_url_safe_token, create_access_token, verify_password, decode_url_safe_token
-from src.config import Config
 from src.db.main import get_session
-from src.mail import mail_config, create_message
+from src.mail import mail_config, welcome_message
 
 auth_router = APIRouter()
 user_service = UserService()
@@ -20,7 +19,8 @@ REFRESH_TOKEN_EXPIRY = 2
 
 
 @auth_router.post('/signup', status_code=status.HTTP_201_CREATED)
-async def create_user_account(user_data: UserCreateModel, session: AsyncSession = Depends(get_session)):
+async def create_user_account(user_data: UserCreateModel, bg_tasks: BackgroundTasks,
+                              session: AsyncSession = Depends(get_session)):
     """Allows a user make a new registration before using the other API resources"""
     user_exists = await user_service.user_exists(user_data.email, session)
     if user_exists:
@@ -28,16 +28,9 @@ async def create_user_account(user_data: UserCreateModel, session: AsyncSession 
                             detail=f'User with email ({user_data.email}) already exists')
     new_user = await user_service.create_user(user_data, session)
     token = create_url_safe_token({'email': user_data.email})
-    link = f'http://{Config.DOMAIN_URL}/v1/api/auth/verify/{token}'
 
-    body_message = f"""
-        <h1>Verify your email</h1>
-        <p>Please click this <a href="{link}">link</a> to validate your account</p>
-        """
-    subject = "Verify your email"
-
-    message = create_message([user_data.email], subject, body_message)
-    await mail_config.send_message(message)
+    message = welcome_message(user_data, token)
+    bg_tasks.add_task(mail_config.send_message, message)
     return {'message': 'Account created! Check your email to verify your account', "user": new_user}
 
 

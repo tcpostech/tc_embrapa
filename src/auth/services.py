@@ -19,9 +19,9 @@ class UserService:
         result = await session.exec(statement)
         return result.first()
 
-    async def user_exists(self, email: str, session: AsyncSession):
+    async def user_exists(self, email: str, session: AsyncSession) -> bool:
         """
-        Validate if email is already registrated in database
+        Validate if email is already registered in database
         :param email: user email in str format
         :param session: current application session
         :return: bool result

@@ -48,7 +48,7 @@ async def login_user(login_data: UserLoginModel, session: AsyncSession = Depends
     if user is not None:
         msg = 'You need to validate your account before login. Please, check your email!'
         if not user.is_verified:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=msg)
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=msg)
 
         password_valid = verify_password(login_data.password, user.password)
         if password_valid:

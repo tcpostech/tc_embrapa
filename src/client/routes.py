@@ -17,23 +17,23 @@ viticulture_service = ViticultureService()
 feign_client = EmbrapaClient()
 
 
-@client_router.get('/embrapa/external_content/{param}')
-async def get_data_from_embrapa_by_param(param: EmbrapaParams,
+@client_router.get('/embrapa/external_content/{category}')
+async def get_data_from_embrapa_by_param(category: EmbrapaParams,
                                          session: AsyncSession = Depends(get_session),
                                          token_details: dict = Depends(access_token_bearer)):
     """
     API responsible for download all CSV files from Embrapa website based
     on each category param and save in database
     """
-    exists = await viticulture_service.data_exists(menus[param.name], session)
+    exists = await viticulture_service.data_exists(menus[category.name], session)
     if exists:
         raise HTTPException(status_code=status.HTTP_208_ALREADY_REPORTED,
                             detail='All data already exists in database.')
 
     async with httpx.AsyncClient() as client:
         try:
-            for option in menus[param.name]:
-                viticulture = await feign_client.process_data(client, option, param)
+            for option in menus[category.name]:
+                viticulture = await feign_client.process_data(client, option, category)
                 await viticulture_service.create_data(viticulture, session)
             return JSONResponse(content={'message': 'All data saved successfully in database'})
         except Exception as e:

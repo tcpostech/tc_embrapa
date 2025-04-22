@@ -1,7 +1,7 @@
 from sqlmodel import select, col
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from src.client.schemas import ViticultureCreateModel
+from src.viticulture.schemas import ViticultureCreateModel
 from src.db.models import Viticulture
 
 
@@ -33,3 +33,25 @@ class ViticultureService:
         statement = select(Viticulture).where(col(Viticulture.subcategory).in_(subcategory))
         result = await session.exec(statement)
         return len(result.all()) != 0
+
+    async def data_from_category(self, category: str, session: AsyncSession):
+        """
+        Get all data by category
+        :param category: ViticultureCategory in str format
+        :param session: current application session
+        :return: Return a list result based in the selected category
+        """
+        statement = select(Viticulture).where(Viticulture.category == category)
+        results = await session.exec(statement)
+        return results.all()
+
+    async def data_from_subcategory(self, subcategory: str, session: AsyncSession):
+        """
+        Get all data by subcategory
+        :param subcategory: ViticultureSubCategory in str format
+        :param session: current application session
+        :return: Return a list result based in the selected subcategory
+        """
+        statement = select(Viticulture).where(Viticulture.subcategory == subcategory)
+        result = await session.exec(statement)
+        return result.first()

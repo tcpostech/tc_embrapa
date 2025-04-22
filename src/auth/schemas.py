@@ -22,7 +22,7 @@ class UserCreateModel(BaseModel):
     first_name: str = Field(max_length=16)
     last_name: str = Field(max_length=30)
     username: str = Field(max_length=16)
-    email: str = Field(max_length=40)
+    email: str = Field(max_length=50)
     password: str = Field(min_length=6, max_length=12)
 
     model_config = {
@@ -40,7 +40,7 @@ class UserCreateModel(BaseModel):
 
 class UserLoginModel(BaseModel):
     """UserLoginModel used for login"""
-    email: str = Field(max_length=40)
+    email: str = Field(max_length=50)
     password: str = Field(min_length=6, max_length=12)
 
     model_config = {

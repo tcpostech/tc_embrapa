@@ -3,10 +3,7 @@ import time
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.requests import Request
-
-from src.config import Config
 
 logger = logging.getLogger('uvicorn.access')
 logger.disabled = True
@@ -14,6 +11,7 @@ logger.disabled = True
 
 def register_middleware(app: FastAPI):
     """Cors config middleware"""
+
     @app.middleware('http')
     async def custom_logging(req: Request, call_next):
         begin = time.time()
@@ -26,10 +24,5 @@ def register_middleware(app: FastAPI):
         print(msg)
         return res
 
-    app.add_middleware(CORSMiddleware,
-                       allow_origins=['*'],
-                       allow_methods=['*'],
-                       allow_headers=['*'],
-                       allow_credentials=True)
-    app.add_middleware(TrustedHostMiddleware,
-                       allowed_hosts=['localhost', '127.0.0.1', Config.DOMAIN_URL])
+    app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'],
+                       allow_headers=['*'], allow_credentials=True)

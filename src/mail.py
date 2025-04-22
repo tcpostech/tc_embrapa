@@ -33,7 +33,7 @@ def create_message(recipients: list, subject: str, body: str):
 def welcome_message(user: UserCreateModel, token: str):
     """Generate a welcome message ready for sending by email"""
     subject = f'Welcome to {Config.MAIL_FROM_NAME}! Confirm Your Registration'
-    link = f'http://{Config.DOMAIN_URL}/v1/api/auth/verify/{token}'
+    link = f'{Config.DOMAIN_URL}v1/api/auth/verify/{token}'
 
     message = f"""
     <h1>Dear {user.first_name},</h1>

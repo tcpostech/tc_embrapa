@@ -42,7 +42,7 @@ async def get_data_from_embrapa_by_param(category: ViticultureCategory,
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
-@viticulture_router.get('/{category}', response_model=List[ViticultureModel])
+@viticulture_router.get('/category/{category}', response_model=List[ViticultureModel])
 async def get_by_category(category: ViticultureCategory, session: AsyncSession = Depends(get_session),
                           token_details: dict = Depends(access_token_bearer)):
     """API responsible for getting all data by category"""
@@ -53,7 +53,7 @@ async def get_by_category(category: ViticultureCategory, session: AsyncSession =
     return results
 
 
-@viticulture_router.get('/{subcategory}', response_model=ViticultureModel)
+@viticulture_router.get('/subcategory/{subcategory}', response_model=ViticultureModel)
 async def get_by_subcategory(subcategory: ViticultureSubCategory,
                              session: AsyncSession = Depends(get_session),
                              token_details: dict = Depends(access_token_bearer)):

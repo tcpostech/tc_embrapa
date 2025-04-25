@@ -1,3 +1,6 @@
+"""
+Middleware class: responsible for Cors configuration and custom application logging
+"""
 import logging
 import time
 

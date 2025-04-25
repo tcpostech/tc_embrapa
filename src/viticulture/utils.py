@@ -1,4 +1,8 @@
-url = 'http://vitibrasil.cnpuv.embrapa.br/download/{}.csv'
+"""
+Utilities for Embrapa external communication
+"""
+
+URL = 'http://vitibrasil.cnpuv.embrapa.br/download/{}.csv'
 
 menus = {
     'PRODUCAO': ['Producao'],

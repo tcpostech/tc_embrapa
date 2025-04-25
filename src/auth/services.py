@@ -1,3 +1,6 @@
+"""
+User Service: responsible for database integration
+"""
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 

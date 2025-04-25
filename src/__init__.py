@@ -1,3 +1,8 @@
+"""
+Main class of the application.
+All configuration below is used for Controller additions, cors configuration,
+Swagger and Redoc headers, etc.
+"""
 from fastapi import FastAPI
 
 from src.auth.routes import auth_router

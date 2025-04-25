@@ -1,3 +1,6 @@
+"""
+Auth Controller: responsible for user authentication and JWT token features
+"""
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter, status, Depends, BackgroundTasks

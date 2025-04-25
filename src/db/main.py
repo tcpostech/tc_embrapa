@@ -1,3 +1,6 @@
+"""
+Class responsible for application session
+"""
 from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncEngine

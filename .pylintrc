@@ -1,14 +1,7 @@
 [MAIN]
 disable=
-        C0103, # invalid-name
-        C0114, # missing-module-docstring
-        C0327, # mixed-line-endings
         E1101, # no-member
-        R1710, # inconsistent-return-statements
-        W0107, # unnecessary-pass
         W0611, # unused-import
-        W0612, # unused-variable
-        W0707, # raise-missing-from
         W0613, # unused-argument
         W0718, # broad-exception-caught
 

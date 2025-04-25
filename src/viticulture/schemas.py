@@ -1,3 +1,6 @@
+"""
+Class responsible for conversion of Viticulture data into dto object
+"""
 import uuid
 from datetime import datetime
 

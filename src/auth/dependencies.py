@@ -1,3 +1,6 @@
+"""
+Dependencies class responsible for JWT token validations
+"""
 from fastapi import Request, status, Depends
 from fastapi.exceptions import HTTPException
 from fastapi.security import HTTPBearer
@@ -13,6 +16,7 @@ user_service = UserService()
 
 class TokenBearer(HTTPBearer):
     """Token Bearer features"""
+
     def __init__(self, auto_error=True):
         super().__init__(auto_error=auto_error)
 
@@ -44,6 +48,7 @@ class TokenBearer(HTTPBearer):
 
 class AccessTokenBearer(TokenBearer):
     """AccessTokenBearer features for token validations"""
+
     def verify_token_data(self, token_data: dict) -> None:
         if token_data and token_data['refresh']:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
@@ -52,6 +57,7 @@ class AccessTokenBearer(TokenBearer):
 
 class RefreshTokenBearer(TokenBearer):
     """RefreshTokenBearer features for token validations"""
+
     def verify_token_data(self, token_data: dict) -> None:
         if token_data and not token_data['refresh']:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,

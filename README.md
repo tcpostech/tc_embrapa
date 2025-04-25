@@ -33,6 +33,7 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 - Crie um banco de dados e realize as migrations com o comando: ``alembic upgrade head``
 - Ao utilizar a aplicação em ambiente local, será possível visualizar a documentação pelo modelo [Swagger](http://127.0.0.1:8000/docs) e [Redoc](http://127.0.0.1:8000/redoc). Variando o domínio de acordo com o ambiente que você estiver executando.
 - Para utilizar a API responsável realizar um cadastro e em seguida se autenticar para que seja possível visualizar o conteúdo extraído do site da Embrapa
+- Antes de realizar qualquer modificação, instalar hook do *pre-commit* ``pre-commit install``
 
 
 ### Principais bibliotecas para o desenvolvimento
@@ -50,7 +51,7 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 - **SQLModel:** Biblioteca para manipulação de bancos de dados usando Pydantic e SQLAlchemy de maneira intuitiva.
 
 ### Passos para o deploy utilizando o [Render](https://dashboard.render.com/)
-- Configurar um banco de dados Postgre
+- Configurar um banco de dados Postgres
 - Executar a aplicação em ambiente local com a nova conexão da base de dados para atualizar todas as tabelas
 - Configurar um novo Web Service
 - Incluir todas as variáveis inclusas no arquivo **.env**

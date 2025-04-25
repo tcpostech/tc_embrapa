@@ -1,3 +1,6 @@
+"""
+Util class responsible JWT token validations
+"""
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -62,7 +65,7 @@ def decode_token(token: str) -> dict:
     try:
         return jwt.decode(jwt=token, key=Config.JWT_SECRET, algorithms=[Config.JWT_ALGORITHM])
     except jwt.PyJWTError as e:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Invalid or expired token.')
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Invalid or expired token.') from e
 
 
 def create_url_safe_token(data: dict):
@@ -84,3 +87,4 @@ def decode_url_safe_token(token: str):
         return serializer.loads(token)
     except Exception as e:
         logging.error(str(e))
+        return None

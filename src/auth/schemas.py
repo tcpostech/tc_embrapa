@@ -1,3 +1,6 @@
+"""
+Class responsible for conversion of User data into dto object
+"""
 import uuid
 from datetime import datetime
 

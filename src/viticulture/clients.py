@@ -1,3 +1,6 @@
+"""
+Embrapa Client class: responsible for external communication with Embrapa website
+"""
 import re
 from io import StringIO
 
@@ -8,7 +11,7 @@ from httpx import AsyncClient, Response
 
 from src.viticulture.enums import ViticultureCategory
 from src.viticulture.schemas import ViticultureCreateModel
-from src.viticulture.utils import url
+from src.viticulture.utils import URL
 
 
 class EmbrapaClient:
@@ -23,7 +26,7 @@ class EmbrapaClient:
         :param category: enum ViticultureCategory
         :return: ViticultureCreateModel response
         """
-        response = await client.get(url=url.format(subcategory), timeout=10)
+        response = await client.get(url=URL.format(subcategory), timeout=10)
         if response.status_code != 200:
             error_msg = 'An error occurred during external request. Try again later!'
             raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=error_msg)

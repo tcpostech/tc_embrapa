@@ -1,3 +1,6 @@
+"""
+Configuration class responsible for getting all env parameters of the application
+"""
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 

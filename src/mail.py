@@ -1,3 +1,6 @@
+"""
+Class responsible for asynchronous email communication using FastAPI Mail
+"""
 from fastapi_mail import FastMail, ConnectionConfig, MessageSchema, MessageType
 
 from src.auth.schemas import UserCreateModel

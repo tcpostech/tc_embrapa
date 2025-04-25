@@ -1,3 +1,6 @@
+"""
+Enums for api communication with database and external communication
+"""
 from enum import Enum
 
 
@@ -12,18 +15,18 @@ class ViticultureCategory(str, Enum):
 
 class ViticultureSubCategory(str, Enum):
     """Embrapa enum based in all available subcategories"""
-    Producao = 'Producao'
-    ProcessaViniferas = 'ProcessaViniferas'
-    ProcessaAmericanas = 'ProcessaAmericanas'
-    ProcessaMesa = 'ProcessaMesa'
-    ProcessaSemclass = 'ProcessaSemclass'
-    Comercio = 'Comercio'
-    ImpVinhos = 'ImpVinhos'
-    ImpEspumantes = 'ImpEspumantes'
-    ImpFrescas = 'ImpFrescas'
-    ImpPassas = 'ImpPassas'
-    ImpSuco = 'ImpSuco'
-    ExpVinho = 'ExpVinho'
-    ExpEspumantes = 'ExpEspumantes'
-    ExpUva = 'ExpUva'
-    ExpSuco = 'ExpSuco'
+    PRODUCAO = 'Producao'
+    PROCESSAVINIFERAS = 'ProcessaViniferas'
+    PROCESSAAMERICANAS = 'ProcessaAmericanas'
+    PROCESSAMESA = 'ProcessaMesa'
+    PROCESSASEMCLASS = 'ProcessaSemclass'
+    COMERCIO = 'Comercio'
+    IMPVINHOS = 'ImpVinhos'
+    IMPESPUMANTES = 'ImpEspumantes'
+    IMPFRESCAS = 'ImpFrescas'
+    IMPPASSAS = 'ImpPassas'
+    IMPSUCO = 'ImpSuco'
+    EXPVINHO = 'ExpVinho'
+    EXPESPUMANTES = 'ExpEspumantes'
+    EXPUVA = 'ExpUva'
+    EXPSUCO = 'ExpSuco'

@@ -1,3 +1,6 @@
+"""
+Class responsible for table models (entities)
+"""
 import uuid
 from datetime import datetime
 

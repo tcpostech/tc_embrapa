@@ -1,3 +1,6 @@
+"""
+Viticulture Controller: responsible for getting all Embrapa viticulture data
+"""
 from typing import List
 
 import httpx
@@ -39,7 +42,7 @@ async def get_data_from_embrapa_by_param(category: ViticultureCategory,
                 await viticulture_service.create_data(viticulture, session)
             return {'message': 'All data saved successfully in database.'}
         except Exception as e:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
 
 
 @viticulture_router.get('/category/{category}', response_model=List[ViticultureModel])

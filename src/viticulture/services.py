@@ -1,3 +1,6 @@
+"""
+Viticulture Service: responsible for database integration
+"""
 from sqlmodel import select, col
 from sqlmodel.ext.asyncio.session import AsyncSession
 

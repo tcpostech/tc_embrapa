@@ -4,8 +4,8 @@ Viticulture Service: responsible for database integration
 from sqlmodel import select, col
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from src.viticulture.schemas import ViticultureCreateModel
 from src.db.models import Viticulture
+from src.viticulture.schemas import ViticultureCreateModel
 
 
 class ViticultureService:

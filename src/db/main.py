@@ -18,6 +18,6 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
     This method is responsible for the postgres+asyncpg session.
     For more information see sessionmaker documentation.
     """
-    session = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
-    async with session() as session:
+    session = sessionmaker(class_=AsyncSession, expire_on_commit=False)
+    async with session(bind=engine) as session:
         yield session

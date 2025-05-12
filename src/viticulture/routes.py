@@ -1,6 +1,7 @@
 """
 Viticulture Controller: responsible for getting all Embrapa viticulture data
 """
+
 from typing import List
 
 import httpx
@@ -11,8 +12,8 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from src.auth.dependencies import AccessTokenBearer
 from src.db.main import get_session
 from src.viticulture.clients import EmbrapaClient
-from src.viticulture.enums import ViticultureCategory, ViticultureSubCategory
-from src.viticulture.schemas import ViticultureModel
+from src.viticulture.enums import CategoryEnum, SubCategoryEnum
+from src.viticulture.schemas import CategoryModel, CategoryCreateModel, SubCategoryModel
 from src.viticulture.services import ViticultureService
 from src.viticulture.utils import menus
 
@@ -23,7 +24,7 @@ feign_client = EmbrapaClient()
 
 
 @viticulture_router.post('/external_content/{category}', status_code=status.HTTP_201_CREATED)
-async def get_data_from_embrapa_by_param(category: ViticultureCategory,
+async def get_data_from_embrapa_by_param(category: CategoryEnum,
                                          session: AsyncSession = Depends(get_session),
                                          token_details: dict = Depends(access_token_bearer)):
     """
@@ -38,31 +39,39 @@ async def get_data_from_embrapa_by_param(category: ViticultureCategory,
     async with httpx.AsyncClient() as client:
         try:
             for option in menus[category.name]:
-                viticulture = await feign_client.process_data(client, option, category)
-                await viticulture_service.create_data(viticulture, session)
+                response = await feign_client.get_external_data(client, option)
+
+                single_category = await viticulture_service.get_category(category.name, session)
+                if not single_category:
+                    dict_category = CategoryCreateModel(**{'category': category.name})
+                    single_category = await viticulture_service.create_category(dict_category, session)
+
+                data_dict = await feign_client.data_to_dict(single_category, response, option)
+                await viticulture_service.create_subcategories(data_dict, session)
+
             return {'message': 'All data saved successfully in database.'}
         except Exception as e:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
 
 
-@viticulture_router.get('/category/{category}', response_model=List[ViticultureModel])
-async def get_by_category(category: ViticultureCategory, session: AsyncSession = Depends(get_session),
+@viticulture_router.get('/category/{category}', response_model=CategoryModel)
+async def get_by_category(category: CategoryEnum, session: AsyncSession = Depends(get_session),
                           token_details: dict = Depends(access_token_bearer)):
     """API responsible for getting all data by category"""
-    results = await viticulture_service.data_from_category(category, session)
-    if len(results) == 0:
+    result = await viticulture_service.get_category(category, session)
+    if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail='No data found with this category')
-    return results
+    return result
 
 
-@viticulture_router.get('/subcategory/{subcategory}', response_model=ViticultureModel)
-async def get_by_subcategory(subcategory: ViticultureSubCategory,
+@viticulture_router.get('/subcategory/{subcategory}/{year}', response_model=List[SubCategoryModel])
+async def get_by_subcategory(subcategory: SubCategoryEnum, year: int,
                              session: AsyncSession = Depends(get_session),
                              token_details: dict = Depends(access_token_bearer)):
     """API responsible for getting all data by subcategory"""
-    result = await viticulture_service.data_from_subcategory(subcategory, session)
-    if not result:
+    result = await viticulture_service.get_all_subcategories(subcategory, year, session)
+    if len(result) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail='No data found with this subcategory')
     return result

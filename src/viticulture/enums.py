@@ -4,7 +4,7 @@ Enums for api communication with database and external communication
 from enum import Enum
 
 
-class ViticultureCategory(str, Enum):
+class CategoryEnum(str, Enum):
     """Embrapa enum based in all available categories"""
     PRODUCAO = 'PRODUCAO'
     PROCESSAMENTO = 'PROCESSAMENTO'
@@ -13,7 +13,7 @@ class ViticultureCategory(str, Enum):
     EXPORTACAO = 'EXPORTACAO'
 
 
-class ViticultureSubCategory(str, Enum):
+class SubCategoryEnum(str, Enum):
     """Embrapa enum based in all available subcategories"""
     PRODUCAO = 'Producao'
     PROCESSAVINIFERAS = 'ProcessaViniferas'

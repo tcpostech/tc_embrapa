@@ -1,30 +1,42 @@
 """
 Viticulture Service: responsible for database integration
 """
+
 from sqlmodel import select, col
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from src.db.models import Viticulture
-from src.viticulture.schemas import ViticultureCreateModel
+from src.db.models import Category, SubCategory
+from src.viticulture.schemas import CategoryCreateModel, SubCategoryCreateModel
 
 
 class ViticultureService:
     """Viticulture Service for storing Embrapa data"""
 
-    async def create_data(self, data: ViticultureCreateModel, session: AsyncSession):
+    async def create_category(self, data: CategoryCreateModel, session: AsyncSession):
         """
-        Create a new user in database with a valid ViticultureCreateModel
-        and returns the new Viticulture
-        :param data: data in ViticultureCreateModel type format
+        Create a new category in database with a valid CategoryCreateModel
+        and returns the new Category
+        :param data: data in CategoryCreateModel type format
         :param session: current application session
-        :return: created Viticulture in database
+        :return: created Category in database
         """
-        data_dict = data.model_dump()
-        new_data = Viticulture(**data_dict)
-
+        new_data = Category(**data.model_dump())
         session.add(new_data)
         await session.commit()
         return new_data
+
+    async def create_subcategories(self, data: list, session: AsyncSession):
+        """
+        Create multiple subcategories in database with a dictonary
+        and returns the new SubCategory
+        :param data: data in dict type format
+        :param session: current application session
+        """
+        for elem in data:
+            new_sub = SubCategoryCreateModel(**elem)
+            subcategory = SubCategory(**new_sub.model_dump())
+            session.add(subcategory)
+            await session.commit()
 
     async def data_exists(self, subcategory: list[str], session: AsyncSession) -> bool:
         """
@@ -33,28 +45,30 @@ class ViticultureService:
         :param session: current application session
         :return: bool result
         """
-        statement = select(Viticulture).where(col(Viticulture.subcategory).in_(subcategory))
+        statement = select(SubCategory).where(col(SubCategory.subcategory).in_(subcategory))
         result = await session.exec(statement)
         return len(result.all()) != 0
 
-    async def data_from_category(self, category: str, session: AsyncSession):
+    async def get_category(self, category: str, session: AsyncSession):
         """
         Get all data by category
         :param category: ViticultureCategory in str format
         :param session: current application session
         :return: Return a list result based in the selected category
         """
-        statement = select(Viticulture).where(Viticulture.category == category)
+        statement = select(Category).where(Category.category == category)
         results = await session.exec(statement)
-        return results.all()
+        return results.first()
 
-    async def data_from_subcategory(self, subcategory: str, session: AsyncSession):
+    async def get_all_subcategories(self, subcategory: str, year: int, session: AsyncSession):
         """
         Get all data by subcategory
         :param subcategory: ViticultureSubCategory in str format
+        :param year: integer value
         :param session: current application session
         :return: Return a list result based in the selected subcategory
         """
-        statement = select(Viticulture).where(Viticulture.subcategory == subcategory)
+        statement = (select(SubCategory).where(SubCategory.subcategory == subcategory)
+                     .where(SubCategory.year == year))
         result = await session.exec(statement)
-        return result.first()
+        return result.all()

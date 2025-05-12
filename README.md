@@ -19,11 +19,11 @@ A ideia do projeto é a criação de uma API pública de consulta nos dados do s
 A API vai servir para alimentar uma base de dados que futuramente será usada para um modelo de Machine Learning.
 
 ### Seus objetivos incluem:
--[x] Criar uma Rest API em Python que faça a consulta no site da Embrapa.
--[x] Sua API deve estar documentada.
--[x] É recomendável (não obrigatório) a escolha de um método de autenticação (JWT, por exemplo).
--[ ] Criar um plano para fazer o deploy da API, desenhando a arquitetura do projeto desde a ingestão até a alimentação do modelo (aqui não é Tech Challenge necessário elaborar um modelo de ML, mas é preciso que vocês escolham um cenário interessante em que a API possa ser utilizada).
--[x] Fazer um MVP realizando o deploy com um link compartilhável e um repositório no GitHub.
+- [x] Criar uma Rest API em Python que faça a consulta no site da Embrapa.
+- [x] Sua API deve estar documentada.
+- [x] É recomendável (não obrigatório) a escolha de um método de autenticação (JWT, por exemplo).
+- [ ] Criar um plano para fazer o deploy da API, desenhando a arquitetura do projeto desde a ingestão até a alimentação do modelo (aqui não é Tech Challenge necessário elaborar um modelo de ML, mas é preciso que vocês escolham um cenário interessante em que a API possa ser utilizada).
+- [x] Fazer um MVP realizando o deploy com um link compartilhável e um repositório no GitHub.
 
 ---
 
@@ -86,4 +86,31 @@ graph TD;
     B --> D{Dados já existem no banco?}
     D -- Sim --> E[Retorna Mensagem: Dados já existentes]
     D -- Não --> F[Salva Dados no Banco]
+```
+
+- Modelagem do banco de dados para os dados da Embrapa
+```mermaid
+erDiagram
+	tb_viticulture_category ||--o{ tb_viticulture_subcategory : references
+
+	tb_viticulture_category {
+		UUID uid
+		VARCHAR(255) nm_category
+		TIMESTAMP created_at
+		TIMESTAMP updated_at
+	}
+
+	tb_viticulture_subcategory {
+		UUID uid
+		VARCHAR(255) subcategory
+		UUID uid_category
+		VARCHAR(255) nm_control
+		VARCHAR(255) nm_country
+		VARCHAR(255) nm_description
+		BIGINT qty_product
+		DECIMAL vl_product
+		INTEGER dt_year
+		TIMESTAMP created_at
+		TIMESTAMP updated_at
+	}
 ```

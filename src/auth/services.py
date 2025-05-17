@@ -4,13 +4,14 @@ User Service: responsible for database integration
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from src.db.models import User
 from src.auth.schemas import UserCreateModel
 from src.auth.utils import get_password_hash
+from src.db.models import User
 
 
 class UserService:
     """User Service features for account registration and validation"""
+
     async def get_user_by_email(self, email: str, session: AsyncSession) -> User:
         """
         Get user data based in email as param
@@ -19,7 +20,7 @@ class UserService:
         :return: user data after get in database
         """
         statement = select(User).where(User.email == email)
-        result = await session.exec(statement)
+        result = await session.scalars(statement)
         return result.first()
 
     async def user_exists(self, email: str, session: AsyncSession) -> bool:

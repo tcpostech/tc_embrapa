@@ -20,7 +20,7 @@ class UserService:
         :return: user data after get in database
         """
         statement = select(User).where(User.email == email)
-        result = await session.exec(statement)
+        result = await session.scalars(statement)
         return result.first()
 
     async def user_exists(self, email: str, session: AsyncSession) -> bool:

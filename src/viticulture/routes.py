@@ -69,7 +69,7 @@ async def get_by_category(category: CategoryEnum, session: AsyncSession = Depend
 async def get_by_subcategory(subcategory: SubCategoryEnum, year: int,
                              session: AsyncSession = Depends(get_session),
                              token_details: dict = Depends(access_token_bearer)):
-    """API responsible for getting all data by subcategory"""
+    """API responsible for getting all data by subcategory and year"""
     result = await viticulture_service.get_all_subcategories(subcategory, year, session)
     if len(result) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

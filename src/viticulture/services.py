@@ -46,7 +46,7 @@ class ViticultureService:
         :return: bool result
         """
         statement = select(SubCategory).where(col(SubCategory.subcategory).in_(subcategory))
-        result = await session.exec(statement)
+        result = await session.scalars(statement)
         return len(result.all()) != 0
 
     async def get_category(self, category: str, session: AsyncSession):
@@ -57,7 +57,7 @@ class ViticultureService:
         :return: Return a list result based in the selected category
         """
         statement = select(Category).where(Category.category == category)
-        results = await session.exec(statement)
+        results = await session.scalars(statement)
         return results.first()
 
     async def get_all_subcategories(self, subcategory: str, year: int, session: AsyncSession):
@@ -70,5 +70,5 @@ class ViticultureService:
         """
         statement = (select(SubCategory).where(SubCategory.subcategory == subcategory)
                      .where(SubCategory.year == year))
-        result = await session.exec(statement)
+        result = await session.scalars(statement)
         return result.all()

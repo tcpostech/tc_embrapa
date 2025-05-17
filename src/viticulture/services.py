@@ -51,8 +51,8 @@ class ViticultureService:
 
     async def get_category(self, category: str, session: AsyncSession):
         """
-        Get all data by category
-        :param category: ViticultureCategory in str format
+        Get all data by category as str
+        :param category: Category in str format
         :param session: current application session
         :return: Return a list result based in the selected category
         """
@@ -62,8 +62,8 @@ class ViticultureService:
 
     async def get_all_subcategories(self, subcategory: str, year: int, session: AsyncSession):
         """
-        Get all data by subcategory
-        :param subcategory: ViticultureSubCategory in str format
+        Get all data by subcategory as str and year
+        :param subcategory: SubCategory in str format
         :param year: integer value
         :param session: current application session
         :return: Return a list result based in the selected subcategory

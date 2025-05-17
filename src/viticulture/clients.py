@@ -35,7 +35,7 @@ class EmbrapaClient:
     async def data_to_dict(self, data: Category, response: Response, subcategory: str):
         """
         Convert received data in dict
-        :param data: enum ViticultureCategory
+        :param data: enum Category
         :param response: response from AsyncClient
         :param subcategory: variable in str format
         :return: dict result

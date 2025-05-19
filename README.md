@@ -22,7 +22,7 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 - [x] Criar uma Rest API em Python que faça a consulta no site da Embrapa.
 - [x] Sua API deve estar documentada.
 - [x] É recomendável (não obrigatório) a escolha de um método de autenticação (JWT, por exemplo).
-- [ ] Criar um plano para fazer o deploy da API, desenhando a arquitetura do projeto desde a ingestão até a alimentação do modelo (aqui não é Tech Challenge necessário elaborar um modelo de ML, mas é preciso que vocês escolham um cenário interessante em que a API possa ser utilizada).
+- [x] Criar um plano para fazer o deploy da API, desenhando a arquitetura do projeto desde a ingestão até a alimentação do modelo (aqui não é Tech Challenge necessário elaborar um modelo de ML, mas é preciso que vocês escolham um cenário interessante em que a API possa ser utilizada).
 - [x] Fazer um MVP realizando o deploy com um link compartilhável e um repositório no GitHub.
 
 ---
@@ -91,25 +91,37 @@ graph TD;
 - Modelagem do banco de dados para os dados da Embrapa
 ```mermaid
 erDiagram
-	tb_viticulture_category ||--o{ tb_viticulture_subcategory : references
+    tb_users {
+        UUID uid
+        VARCHAR(255) first_name
+        VARCHAR(255) last_name
+        VARCHAR(255) username
+        VARCHAR(255) email
+        VARCHAR(255) password
+        BOOLEAN is_verified
+		TIMESTAMP created_at
+		TIMESTAMP updated_at
+    }
+    
+	tb_category ||--o{ tb_subcategory : references
 
-	tb_viticulture_category {
+	tb_category {
 		UUID uid
-		VARCHAR(255) nm_category
+		VARCHAR(255) category
 		TIMESTAMP created_at
 		TIMESTAMP updated_at
 	}
 
-	tb_viticulture_subcategory {
+	tb_subcategory {
 		UUID uid
 		VARCHAR(255) subcategory
-		UUID uid_category
-		VARCHAR(255) nm_control
-		VARCHAR(255) nm_country
-		VARCHAR(255) nm_description
-		BIGINT qty_product
-		DECIMAL vl_product
-		INTEGER dt_year
+		VARCHAR(255) control
+		VARCHAR(255) product
+		VARCHAR(255) country
+		FLOAT qty_product
+		FLOAT vl_product
+		INTEGER year
+		UUID category_uid
 		TIMESTAMP created_at
 		TIMESTAMP updated_at
 	}

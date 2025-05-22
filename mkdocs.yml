@@ -1,0 +1,34 @@
+site_name: Tech Challenge 01 - Embrapa
+site_url: !ENV DOMAIN_URL
+plugins:
+  - search
+  - mermaid2:
+      javascript: https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js
+theme:
+  language: pt-br
+  name: material
+  font:
+    text: Roboto
+    code: Red Hat Mono
+  features:
+    - navigation.footer
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: green
+      accent: deep purple
+extra:
+  social:
+    - icon: material/github
+      link: https://github.com/tcpostech
+    - icon: material/linkedin
+      link: https://www.linkedin.com/in/ronaldo-mendes-da-silva-b3382511a/
+copyright: Copyright &copy; 2025 Ronaldo Mendes

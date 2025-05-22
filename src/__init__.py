@@ -3,7 +3,9 @@ Main class of the application.
 All configuration below is used for Controller additions, cors configuration,
 Swagger and Redoc headers, etc.
 """
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from src.auth.routes import auth_router
 from src.middleware import register_middleware
@@ -31,6 +33,18 @@ app = FastAPI(
     openapi_url='/documentation/openapi.json',
     openapi_tags=tags_metadata
 )
+
+app.mount("/site", StaticFiles(directory="site"), name="docs")
+app.mount("/assets", StaticFiles(directory='site/assets'), name='assets')
+app.mount("/search", StaticFiles(directory='site/search'), name='search')
+templates = Jinja2Templates(directory="site")
+
+
+@app.get("/", include_in_schema=False)
+async def mkdocs(request: Request):
+    """Exposing api documentation and excluding from swagger and redoc"""
+    return templates.TemplateResponse(name="index.html", request=request)
+
 
 register_middleware(app)
 app.include_router(auth_router, prefix='/v1/api/auth', tags=['Auth Controller'])

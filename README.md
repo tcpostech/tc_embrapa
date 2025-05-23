@@ -43,6 +43,8 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 - **FastAPI:** Framework web moderno e rápido para APIs, baseado em Python e tipo hints.
 - **Fastapi-Mail:** Biblioteca para envio de e-mails assíncronos com FastAPI e suporte a templates.
 - **ItsDangerous:** Ferramenta para criar tokens seguros e assinar dados de forma confiável.
+- **MkDocs:** Gera sites de documentação estática usando Markdown, simples e eficiente.
+- **MkDocs Material:** Um tema elegante para MkDocs, baseado no Material Design, com recursos avançados.
 - **Pre Commit:** Framework para gerenciamento de hooks Git, automatizando verificações antes de commits.
 - **Pydantic:** Validação de dados poderosa baseada em Python, usando modelos e tipo hints.
 - **Pydantic Settings:** Gerenciamento de configurações utilizando Pydantic, facilitando validação e carregamento de variáveis.
@@ -56,36 +58,15 @@ A API vai servir para alimentar uma base de dados que futuramente será usada pa
 - Configurar um novo Web Service
 - Incluir todas as variáveis inclusas no arquivo **.env**
 
-### Fluxos de cada etapa funcional
-- Cadastro com envio de e-mail
-```mermaid
-graph TD;
-    A[Usuário Preenche Cadastro] --> B[Valida Dados]
-    B --> C{Dados Válidos?}
-    C -- Não --> D[Exibe Erro]
-    C -- Sim --> E[Salva no Banco de Dados]
-    E --> F[Envia Email de Confirmação]
-    F --> G[Cadastro Concluído]
-```
+### Diagrama de fluxo
 
-- Login com verificação de e-mail
+Esta seção apresenta uma forma simplificada de como funciona o fluxo de escrita e leitura.
 ```mermaid
-graph TD;
-    A[Usuário Insere Credenciais] --> B[Valida Credenciais]
-    B --> C{Email Verificado?}
-    C -- Não --> D[Retorna Erro]
-    C -- Sim --> E[Acesso Permitido]
-
-```
-
-- Consulta e armazenamento de dados da API da Embrapa
-```mermaid
-graph TD;
-    A[Usuário Possui Sessão Válida?] -->|Sim| B[Consulta API da Embrapa]
-    A -->|Não| C[Retorna Mensagem de Erro]
-    B --> D{Dados já existem no banco?}
-    D -- Sim --> E[Retorna Mensagem: Dados já existentes]
-    D -- Não --> F[Salva Dados no Banco]
+flowchart TD
+    A["Usuário"] <-- Acesso ao sistema e consulta de dados persistidos --> B["Sistema Interno"]
+    B -- Busca os arquivos por HTTP --> C["Site Externo"]
+    C -- Retorno dos dados em CSV --> B
+    B <-- Salva e recupera dados no banco --> D["Banco de Dados"]
 ```
 
 - Modelagem do banco de dados para os dados da Embrapa

@@ -164,9 +164,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#fluxos-de-cada-etapa-funcional">
+<a class="md-nav__link" href="#diagrama-de-fluxo">
 <span class="md-ellipsis">
-      Fluxos de cada etapa funcional
+      Diagrama de fluxo
     </span>
 </a>
 </li>
@@ -230,9 +230,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#fluxos-de-cada-etapa-funcional">
+<a class="md-nav__link" href="#diagrama-de-fluxo">
 <span class="md-ellipsis">
-      Fluxos de cada etapa funcional
+      Diagrama de fluxo
     </span>
 </a>
 </li>
@@ -305,6 +305,8 @@ abordagem de design de software conhecida por arquitetura modular.</p>
 <li><strong>FastAPI:</strong> Framework web moderno e rápido para APIs, baseado em Python e tipo hints.</li>
 <li><strong>Fastapi-Mail:</strong> Biblioteca para envio de e-mails assíncronos com FastAPI e suporte a templates.</li>
 <li><strong>ItsDangerous:</strong> Ferramenta para criar tokens seguros e assinar dados de forma confiável.</li>
+<li><strong>MkDocs:</strong> Gera sites de documentação estática usando Markdown, simples e eficiente.</li>
+<li><strong>MkDocs Material:</strong> Um tema elegante para MkDocs, baseado no Material Design, com recursos avançados.</li>
 <li><strong>Pre Commit:</strong> Framework para gerenciamento de hooks Git, automatizando verificações antes de commits.</li>
 <li><strong>Pydantic:</strong> Validação de dados poderosa baseada em Python, usando modelos e tipo hints.</li>
 <li><strong>Pydantic Settings:</strong> Gerenciamento de configurações utilizando Pydantic, facilitando validação e carregamento de variáveis.</li>
@@ -322,37 +324,13 @@ aplicação utilizando o <a href="https://dashboard.render.com/">Render</a> como
 <li>Incluir todas as variáveis inclusas no arquivo <strong>.env</strong>;</li>
 <li>Acompanhar o deploy das aplicações e realizar o teste de acordo com o endereço atribuído.</li>
 </ul>
-<h2 id="fluxos-de-cada-etapa-funcional">Fluxos de cada etapa funcional</h2>
-<ul>
-<li>Cadastro com envio de e-mail</li>
-</ul>
-<div class="mermaid">graph TD;
-    A[Usuário Preenche Cadastro] --&gt; B[Valida Dados]
-    B --&gt; C{Dados Válidos?}
-    C -- Não --&gt; D[Exibe Erro]
-    C -- Sim --&gt; E[Salva no Banco de Dados]
-    E --&gt; F[Envia Email de Confirmação]
-    F --&gt; G[Cadastro Concluído]
-</div>
-<ul>
-<li>Login com verificação de e-mail</li>
-</ul>
-<div class="mermaid">graph TD;
-    A[Usuário Insere Credenciais] --&gt; B[Valida Credenciais]
-    B --&gt; C{Email Verificado?}
-    C -- Não --&gt; D[Retorna Erro]
-    C -- Sim --&gt; E[Acesso Permitido]
-
-</div>
-<ul>
-<li>Consulta e armazenamento de dados da API da Embrapa</li>
-</ul>
-<div class="mermaid">graph TD;
-    A[Usuário Possui Sessão Válida?] --&gt;|Sim| B[Consulta API da Embrapa]
-    A --&gt;|Não| C[Retorna Mensagem de Erro]
-    B --&gt; D{Dados já existem no banco?}
-    D -- Sim --&gt; E[Retorna Mensagem: Dados já existentes]
-    D -- Não --&gt; F[Salva Dados no Banco]
+<h2 id="diagrama-de-fluxo">Diagrama de fluxo</h2>
+<p>Esta seção apresenta uma forma simplificada de como funciona o fluxo de escrita e leitura.</p>
+<div class="mermaid">flowchart TD
+    A["Usuário"] &lt;-- Acesso ao sistema e consulta de dados persistidos --&gt; B["Sistema Interno"]
+    B -- Busca os arquivos por HTTP --&gt; C["Site Externo"]
+    C -- Retorno dos dados em CSV --&gt; B
+    B &lt;-- Salva e recupera dados no banco --&gt; D["Banco de Dados"]
 </div>
 <h2 id="modelagem-do-banco-de-dados">Modelagem do banco de dados</h2>
 <ul>

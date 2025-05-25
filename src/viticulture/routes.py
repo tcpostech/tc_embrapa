@@ -2,9 +2,8 @@
 Viticulture Controller: responsible for getting all Embrapa viticulture data
 """
 
-from typing import List
+from typing import List, Optional
 
-import httpx
 from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -12,8 +11,8 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from src.auth.dependencies import AccessTokenBearer
 from src.db.main import get_session
 from src.viticulture.clients import EmbrapaClient
-from src.viticulture.enums import CategoryEnum, SubCategoryEnum
-from src.viticulture.schemas import CategoryModel, CategoryCreateModel, SubCategoryModel
+from src.viticulture.enums import CategoryEnum, SubCategoryEnum, ProcessMode
+from src.viticulture.schemas import CategoryModel, SubCategoryModel
 from src.viticulture.services import ViticultureService
 from src.viticulture.utils import menus
 
@@ -25,6 +24,7 @@ feign_client = EmbrapaClient()
 
 @viticulture_router.post('/external_content/{category}', status_code=status.HTTP_201_CREATED)
 async def get_data_from_embrapa_by_param(category: CategoryEnum,
+                                         mode: Optional[ProcessMode] = ProcessMode.API,
                                          session: AsyncSession = Depends(get_session),
                                          token_details: dict = Depends(access_token_bearer)):
     """
@@ -36,22 +36,9 @@ async def get_data_from_embrapa_by_param(category: CategoryEnum,
         raise HTTPException(status_code=status.HTTP_208_ALREADY_REPORTED,
                             detail='All data already exists in database.')
 
-    async with httpx.AsyncClient() as client:
-        try:
-            for option in menus[category.name]:
-                response = await feign_client.get_external_data(client, option)
-
-                single_category = await viticulture_service.get_category(category.name, session)
-                if not single_category:
-                    dict_category = CategoryCreateModel(**{'category': category.name})
-                    single_category = await viticulture_service.create_category(dict_category, session)
-
-                data_dict = await feign_client.data_to_dict(single_category, response, option)
-                await viticulture_service.create_subcategories(data_dict, session)
-
-            return {'message': 'All data saved successfully in database.'}
-        except Exception as e:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
+    if mode == ProcessMode.FILE:
+        return await feign_client.process_file_mode(category, session)
+    return await feign_client.process_api_mode(category, session)
 
 
 @viticulture_router.get('/category/{category}', response_model=CategoryModel)

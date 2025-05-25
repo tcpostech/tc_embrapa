@@ -11,7 +11,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from src.auth.dependencies import AccessTokenBearer
 from src.db.main import get_session
 from src.viticulture.clients import EmbrapaClient
-from src.viticulture.enums import CategoryEnum, SubCategoryEnum, ProcessMode
+from src.viticulture.enums import CategoryEnum, SubCategoryEnum, ProcessModeEnum
 from src.viticulture.schemas import CategoryModel, SubCategoryModel
 from src.viticulture.services import ViticultureService
 from src.viticulture.utils import menus
@@ -24,7 +24,7 @@ feign_client = EmbrapaClient()
 
 @viticulture_router.post('/external_content/{category}', status_code=status.HTTP_201_CREATED)
 async def get_data_from_embrapa_by_param(category: CategoryEnum,
-                                         mode: Optional[ProcessMode] = ProcessMode.API,
+                                         mode: Optional[ProcessModeEnum] = ProcessModeEnum.API,
                                          session: AsyncSession = Depends(get_session),
                                          token_details: dict = Depends(access_token_bearer)):
     """
@@ -36,7 +36,7 @@ async def get_data_from_embrapa_by_param(category: CategoryEnum,
         raise HTTPException(status_code=status.HTTP_208_ALREADY_REPORTED,
                             detail='All data already exists in database.')
 
-    if mode == ProcessMode.FILE:
+    if mode == ProcessModeEnum.FILE:
         return await feign_client.process_file_mode(category, session)
     return await feign_client.process_api_mode(category, session)
 

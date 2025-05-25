@@ -30,3 +30,9 @@ class SubCategoryEnum(str, Enum):
     EXPESPUMANTES = 'ExpEspumantes'
     EXPUVA = 'ExpUva'
     EXPSUCO = 'ExpSuco'
+
+
+class ProcessModeEnum(str, Enum):
+    """Enumeration for processing external data mode"""
+    API = 'API'
+    FILE = 'FILE'

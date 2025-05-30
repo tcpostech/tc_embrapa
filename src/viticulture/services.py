@@ -2,6 +2,7 @@
 Viticulture Service: responsible for database integration
 """
 
+from sqlalchemy import delete, cast, String
 from sqlmodel import select, col
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -72,3 +73,18 @@ class ViticultureService:
                      .where(SubCategory.year == year))
         result = await session.scalars(statement)
         return result.all()
+
+    async def delete_subcategory(self, subcategory: str, session: AsyncSession) -> dict | None:
+        """
+        Remove all data by subcategory as str format
+        :param subcategory: subcategory in str format
+        :param session: current application session
+        :return: Return a dict or none
+        """
+        statement = delete(SubCategory).where(cast(SubCategory.subcategory, String) == subcategory)
+
+        if statement is not None:
+            await session.scalars(statement)
+            await session.commit()
+            return {}
+        return None

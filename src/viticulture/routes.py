@@ -64,8 +64,7 @@ async def get_by_subcategory(subcategory: SubCategoryEnum, year: int,
     return result
 
 
-@viticulture_router.delete('/subcategory/{subcategory}', include_in_schema=False,
-                           status_code=status.HTTP_204_NO_CONTENT)
+@viticulture_router.delete('/subcategory/{subcategory}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_by_subcategory(subcategory: SubCategoryEnum,
                                 session: AsyncSession = Depends(get_session),
                                 token_details: dict = Depends(access_token_bearer)):

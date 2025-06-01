@@ -41,7 +41,7 @@ Para iniciar a execução e compreensão deste projeto, é importante seguir os 
 - Faça uma cópia do arquivo **.env.text** e crie um arquivo **.env**;
 - Preencha cada uma das variáveis de acordo com o seu ambiente de desenvolvimento;
 - Crie um banco de dados e realize as migrations com o comando: ``alembic upgrade head``;
-- Ao utilizar a aplicação em ambiente local, será possível visualizar a documentação pelo modelo [Swagger](http://127.0.0.1:8000/documentation/swagger) e [Redoc](http://127.0.0.1:8000/documentation/redoc). Variando o domínio de acordo com o ambiente que você estiver executando;
+- Ao utilizar a aplicação em ambiente local, será possível visualizar a documentação pelo modelo **Swagger** e **Redoc**. Variando o domínio de acordo com o ambiente que você estiver executando;
 - Para utilizar a API responsável realizar um cadastro e em seguida se autenticar para que seja possível visualizar o conteúdo extraído do site da Embrapa;
 - Antes de realizar qualquer modificação, instalar hook do *pre-commit* ``pre-commit install``;
 - Para atualizar a documentação, basta atualizar este arquivo e em seguida utilizar o comando ``mkdocs build`` para que ele seja atualizado no diretório *site*;
@@ -82,10 +82,12 @@ Esta seção apresenta uma forma simplificada de como funciona o fluxo de escrit
 ```mermaid
 flowchart TD
     A["Usuário"] <-- Acesso ao sistema e consulta de dados persistidos --> B["Sistema Interno"]
-    B -- Busca os arquivos por HTTP --> C["Site Externo"]
+    B -- Busca os arquivos por HTTP --> C["Site Embrapa"]
     C -- Retorno dos dados em CSV --> B
     B <-- Salva e recupera dados no banco --> D["Banco de Dados"]
 ```
+
+>Em caso de erros, é possível selecionar uma modo que a persistência de dados seja através de um arquivo CSV ao invés da consulta externa ao site da Embrapa.
 
 ## Modelagem do banco de dados
 - Modelagem do banco de dados para este projeto

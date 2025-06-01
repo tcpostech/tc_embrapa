@@ -62,3 +62,15 @@ async def get_by_subcategory(subcategory: SubCategoryEnum, year: int,
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail='No data found with this subcategory')
     return result
+
+
+@viticulture_router.delete('/subcategory/{subcategory}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete_by_subcategory(subcategory: SubCategoryEnum,
+                                session: AsyncSession = Depends(get_session),
+                                token_details: dict = Depends(access_token_bearer)):
+    """API responsible for delete all data by subcategory"""
+    result = await viticulture_service.delete_subcategory(subcategory, session)
+    if isinstance(result, dict):
+        return result
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f'Subcategory not found with name: {subcategory}')

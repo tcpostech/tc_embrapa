@@ -289,7 +289,7 @@ abordagem de design de software conhecida por arquitetura modular.</p>
 <li>Faça uma cópia do arquivo <strong>.env.text</strong> e crie um arquivo <strong>.env</strong>;</li>
 <li>Preencha cada uma das variáveis de acordo com o seu ambiente de desenvolvimento;</li>
 <li>Crie um banco de dados e realize as migrations com o comando: <code>alembic upgrade head</code>;</li>
-<li>Ao utilizar a aplicação em ambiente local, será possível visualizar a documentação pelo modelo <a href="http://127.0.0.1:8000/documentation/swagger">Swagger</a> e <a href="http://127.0.0.1:8000/documentation/redoc">Redoc</a>. Variando o domínio de acordo com o ambiente que você estiver executando;</li>
+<li>Ao utilizar a aplicação em ambiente local, será possível visualizar a documentação pelo modelo <strong>Swagger</strong> e <strong>Redoc</strong>. Variando o domínio de acordo com o ambiente que você estiver executando;</li>
 <li>Para utilizar a API responsável realizar um cadastro e em seguida se autenticar para que seja possível visualizar o conteúdo extraído do site da Embrapa;</li>
 <li>Antes de realizar qualquer modificação, instalar hook do <em>pre-commit</em> <code>pre-commit install</code>;</li>
 <li>Para atualizar a documentação, basta atualizar este arquivo e em seguida utilizar o comando <code>mkdocs build</code> para que ele seja atualizado no diretório <em>site</em>;</li>
@@ -328,10 +328,13 @@ aplicação utilizando o <a href="https://dashboard.render.com/">Render</a> como
 <p>Esta seção apresenta uma forma simplificada de como funciona o fluxo de escrita e leitura.</p>
 <div class="mermaid">flowchart TD
     A["Usuário"] &lt;-- Acesso ao sistema e consulta de dados persistidos --&gt; B["Sistema Interno"]
-    B -- Busca os arquivos por HTTP --&gt; C["Site Externo"]
+    B -- Busca os arquivos por HTTP --&gt; C["Site Embrapa"]
     C -- Retorno dos dados em CSV --&gt; B
     B &lt;-- Salva e recupera dados no banco --&gt; D["Banco de Dados"]
 </div>
+<blockquote>
+<p>Em caso de erros, é possível selecionar uma modo que a persistência de dados seja através de um arquivo CSV ao invés da consulta externa ao site da Embrapa.</p>
+</blockquote>
 <h2 id="modelagem-do-banco-de-dados">Modelagem do banco de dados</h2>
 <ul>
 <li>Modelagem do banco de dados para este projeto</li>
